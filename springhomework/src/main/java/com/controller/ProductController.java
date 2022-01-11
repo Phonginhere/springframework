@@ -45,11 +45,11 @@ public class ProductController {
     @PostMapping("/insert")
     ResponseEntity<ResponseObject> insertProduct(@RequestBody Product newProduct){
         //2 product must not the same name
-//        List<Product> foundProducts = repository.findbyProductName(newProduct.getProductName().trim());
-//        if(foundProducts.size() > 0){
-//            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-//                    new ResponseObject("failed", "insert product duplicated= ", ""));
-//        }
+        List<Product> foundProducts = repository.findbyProductName(newProduct.getProductName().trim());
+        if(foundProducts.size() > 0){
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
+                    new ResponseObject("failed", "insert product duplicated= ", ""));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("Ok", "insert product succesfully", repository.save(newProduct)));
     }
