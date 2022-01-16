@@ -1,6 +1,7 @@
 package com.project.book.controller;
 
 import com.project.book.model.Book;
+import com.project.book.model.Book2;
 import com.project.book.model.Category;
 import com.project.book.repositories.BookRepository;
 import com.project.book.repositories.CategoryRepository;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -31,11 +34,16 @@ public class BookController {
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String BookList (ModelMap modelMap){
 
+
         Iterable<Book> books = bookRepository.findAll();
+        List<Book2> booklist2 = new ArrayList<Book2>();
         for(Book b:books){
+            Optional<Category> categories = categoryRepository.findById(b.getCategoryID());
+            booklist2.add(new Book2(b.getBookID(), b.getTitle(), b.getPrice(), categories.get().getCategoryName()));
             System.out.println(b);
         }
-        modelMap.addAttribute("books", books);
+        modelMap.addAttribute("booklist2", booklist2);
+        //modelMap.addAttribute("books", books);
         return "booklist";
     }
 

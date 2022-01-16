@@ -17,15 +17,17 @@
             <th>Price</th>
             <th>Delete</th>
         </tr>
-        <c:forEach var="i" items="${books}">
+
+        <c:forEach var="i" items="${booklist2}">
             <tr>
                 <td>${i.getBookID()}</td>
                 <td>${i.getTitle()}</td>
-                <td>${i.getCategoryID()}</td>
+                <td>${i.getCategoryName()}</td>
                 <td>${i.getPrice()}</td>
                 <td><a href="/book/bookDeleteConfirm?bookId=${i.getBookID()}">Delete</a></td>
             </tr>
-        </c:forEach>
+            </c:forEach>
+
     </table>
     <a href="/book/welcome">Return to welcome page</a></td>
 </body>
