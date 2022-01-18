@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,18 +26,32 @@ public class BookController {
     private BookRepository bookRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
+    @Autowired
+    private HttpSession httpSession;
 
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String Welcome (ModelMap modelMap){
+        if(httpSession.getAttribute("username") == null){
+            return "redirect:/user/login";
+        }
+        httpSession.getAttribute("username");
         return "welcome";
     }
 
     @RequestMapping(value = "/booklist", method = RequestMethod.GET)
     public String BookList (ModelMap modelMap){
-
+        if(httpSession.getAttribute("username") == null){
+            return "redirect:/user/login";
+        }
 
         Iterable<Book> books = bookRepository.findAll();
+        List <Object> booklist = bookRepository.getBooksAndCategory();
+        for (Object eachBook: booklist) {
+            //Integer bookId = Integer.valueOf(eachBook[0]);
+            //int bookId = (Integer)eachBook[0]; //error this line
+            int xxxxxx = 11;
+        }
+
         List<Book2> booklist2 = new ArrayList<Book2>();
         for(Book b:books){
             Optional<Category> categories = categoryRepository.findById(b.getCategoryID());
@@ -49,7 +65,9 @@ public class BookController {
 
     @RequestMapping(value = "/bookDeleteConfirm", method = RequestMethod.GET)
     public String BookDeleteConfirm (ModelMap modelMap,@RequestParam("bookId") String bookId){
-
+        if(httpSession.getAttribute("username") == null){
+            return "redirect:/user/login";
+        }
         modelMap.addAttribute("bookid", bookId);
         return "ask";
     }
@@ -71,7 +89,9 @@ public class BookController {
 
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
     public String Insert (ModelMap modelMap){
-
+        if(httpSession.getAttribute("username") == null){
+            return "redirect:/user/login";
+        }
         Iterable<Category> categories = categoryRepository.findAll();
         modelMap.addAttribute("categories", categories);
         return "insertbook";
@@ -91,6 +111,7 @@ public class BookController {
 
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String Logout(ModelMap modelMap){
+        httpSession.removeAttribute("username");
         return "redirect:/user/login";
     }
 }

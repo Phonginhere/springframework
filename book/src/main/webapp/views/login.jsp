@@ -10,7 +10,7 @@
     <h2>Login</h2>
     <h2 style="color: red;">${fail}</h2>
     <form method="post" action="login">
-        <input type="text" name="username">
+        <input type="text" name="tennguoidung">
         <input type="password" name="pass">
         <input type="submit" value="submit">
     </form>

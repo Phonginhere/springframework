@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h2><b>Welcome</b></h2>
+    <h2><b>Welcome ${username}</b></h2>
     <ul>
         <li><a href="/book/booklist">List all books</a></li>
         <li><a href="/book/insert">Insert books</a></li>
